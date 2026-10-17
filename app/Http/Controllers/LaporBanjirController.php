@@ -2,47 +2,68 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Laporan;
 use Illuminate\Http\Request;
 
 class LaporBanjirController extends Controller
 {
-    /**
-     * Menampilkan halaman form laporan banjir.
-     */
+    public function home()
+    {
+        return view('home');
+    }
+
     public function create()
     {
         return view('lapor');
     }
 
-    /**
-     * Memproses data laporan dari form.
-     */
+    // Menyimpan laporan ke database
     public function store(Request $request)
     {
-        // Validasi data
         $validated = $request->validate([
             'nama' => 'required|string|max:100',
             'lokasi' => 'required|string|max:150',
-            'tinggi_air' => 'required|numeric|min:1',
+            'tinggi_air' => 'required|integer|min:1',
+            'tanggal_kejadian' => 'required|date',
             'keterangan' => 'required|string|max:500',
         ], [
             'nama.required' => 'Nama pelapor wajib diisi.',
-            'nama.max' => 'Nama maksimal 100 karakter.',
-
             'lokasi.required' => 'Lokasi kejadian wajib diisi.',
-            'lokasi.max' => 'Lokasi maksimal 150 karakter.',
-
             'tinggi_air.required' => 'Tinggi genangan wajib diisi.',
-            'tinggi_air.numeric' => 'Tinggi genangan harus berupa angka.',
+            'tinggi_air.integer' => 'Tinggi air harus berupa angka bulat.',
             'tinggi_air.min' => 'Tinggi genangan minimal 1 cm.',
-
-            'keterangan.required' => 'Keterangan wajib diisi.',
-            'keterangan.max' => 'Keterangan maksimal 500 karakter.',
+            'tanggal_kejadian.required' => 'Tanggal kejadian wajib diisi.',
+            'tanggal_kejadian.date' => 'Tanggal kejadian tidak valid.',
+            'keterangan.required' => 'Keterangan kejadian wajib diisi.',
         ]);
 
-        // Mengirim data ke halaman konfirmasi
-        return view('konfirmasi', [
-            'laporan' => $validated
+        // Sesuaikan nama input form dengan kolom database
+        $laporan = Laporan::create([
+            'nama_pelapor' => $validated['nama'],
+            'lokasi' => $validated['lokasi'],
+            'tinggi_genangan' => $validated['tinggi_air'],
+            'tanggal_kejadian' => $validated['tanggal_kejadian'],
+            'keterangan' => $validated['keterangan'],
         ]);
+
+        // Tampilkan data yang baru tersimpan di halaman konfirmasi
+        return redirect()
+            ->route('konfirmasi')
+            ->with('laporan_terbaru', $laporan);
+    }
+
+    // Mengambil laporan dari database, bukan array session
+    public function index()
+    {
+        $laporan = Laporan::latest()->get();
+
+        return view('laporan', compact('laporan'));
+    }
+
+    public function konfirmasi()
+    {
+        $laporan = session('laporan_terbaru');
+
+        return view('konfirmasi', compact('laporan'));
     }
 }

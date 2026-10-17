@@ -1,68 +1,99 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>LaporBanjir - BPBD Kabupaten Bandung</title>
+@extends('layouts.app')
 
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-</head>
+@section('title', 'Beranda | LaporBanjir')
 
-<body>
+@section('content')
 
-    <div class="container">
+<section class="hero-section">
+    <div class="hero-content">
+        <span class="hero-badge">🌿 Pelayanan Informasi Banjir</span>
 
-        <div class="hero">
+        <h1>Laporkan Banjir,<br>
+            <span>Bantu Sesama.</span>
+        </h1>
 
-            <div class="icon">🌊</div>
+        <p>
+            Sampaikan informasi kejadian banjir di sekitar Anda
+            agar kondisi wilayah dapat diketahui dengan lebih cepat.
+        </p>
 
-            <h1>LaporBanjir</h1>
-
-            <p class="subtitle">
-                Sistem Pelaporan Banjir
-                <br>
-                BPBD Kabupaten Bandung
-            </p>
-
-            <p class="description">
-                Laporkan kejadian banjir di sekitar Anda
-                dengan cepat dan mudah.
-            </p>
-
-            <a href="{{ route('lapor') }}" class="btn">
-                Buat Laporan Banjir
+        <div class="hero-actions">
+            <a href="{{ route('lapor') }}" class="btn btn-primary">
+                Buat Laporan <span>→</span>
             </a>
 
+            <a href="{{ route('laporan.index') }}" class="btn btn-outline">
+                Lihat Daftar Laporan
+            </a>
         </div>
 
-        <div class="info">
-
-            <div class="info-card">
-                <span>📍</span>
-                <h3>Lokasi</h3>
-                <p>Informasikan lokasi terjadinya banjir.</p>
-            </div>
-
-            <div class="info-card">
-                <span>💧</span>
-                <h3>Tinggi Air</h3>
-                <p>Masukkan perkiraan tinggi genangan.</p>
-            </div>
-
-            <div class="info-card">
-                <span>⚡</span>
-                <h3>Cepat</h3>
-                <p>Laporkan kejadian dengan mudah.</p>
-            </div>
-
+        <div class="hero-note">
+            <span class="note-dot"></span>
+            Prototype pelaporan banjir tanpa database
         </div>
-
-        <footer>
-            &copy; {{ date('Y') }} LaporBanjir - BPBD Kabupaten Bandung
-        </footer>
-
     </div>
 
-</body>
-</html>
+    <div class="hero-visual">
+        <div class="visual-circle">
+            <span class="visual-water">🌊</span>
+        </div>
+        <div class="floating-card floating-top">
+            <span>📍</span>
+            <div>
+                <strong>Informasi Lokasi</strong>
+                <small>Wilayah terdampak</small>
+            </div>
+        </div>
+        <div class="floating-card floating-bottom">
+            <span>✓</span>
+            <div>
+                <strong>Pelaporan Mudah</strong>
+                <small>Isi formulir secara online</small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-heading">
+    <span class="eyebrow">MUDAH DAN PRAKTIS</span>
+    <h2>Bagaimana cara melapor?</h2>
+    <p>Ikuti tiga langkah sederhana berikut untuk membuat laporan.</p>
+</section>
+
+<section class="steps-grid">
+    <article class="step-card">
+        <div class="step-number">01</div>
+        <div class="step-icon">📝</div>
+        <h3>Isi Formulir</h3>
+        <p>Masukkan nama, lokasi kejadian, tinggi air, dan keterangan.</p>
+    </article>
+
+    <article class="step-card">
+        <div class="step-number">02</div>
+        <div class="step-icon">📤</div>
+        <h3>Kirim Laporan</h3>
+        <p>Periksa kembali data, lalu kirim formulir laporan Anda.</p>
+    </article>
+
+    <article class="step-card">
+        <div class="step-number">03</div>
+        <div class="step-icon">📋</div>
+        <h3>Lihat Hasil</h3>
+        <p>Lihat konfirmasi dan periksa laporan pada halaman daftar.</p>
+    </article>
+</section>
+
+<section class="callout">
+    <div>
+        <span class="eyebrow">MULAI SEKARANG</span>
+        <h2>Mengetahui kondisi sekitar dimulai dari sebuah laporan.</h2>
+        <p>Gunakan formulir sederhana untuk mencatat kejadian banjir.</p>
+    </div>
+
+    <a href="{{ route('lapor') }}" class="btn btn-light">
+        Buat Laporan <span>→</span>
+    </a>
+</section>
+
+@endsection
